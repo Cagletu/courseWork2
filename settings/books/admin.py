@@ -10,6 +10,7 @@ class BookAdmin(admin.ModelAdmin):
         ('Main info about book', {
             'fields': (
                 'book_name',
+                'book_image',
                 'book_price',
                 'autor',
                 'series',

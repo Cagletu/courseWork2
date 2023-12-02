@@ -1,3 +1,6 @@
+from pathlib import Path
+
+from PIL import Image
 from django.shortcuts import render
 from django.views import generic
 
@@ -125,11 +128,13 @@ class SeriesDeleteView(generic.DeleteView):
     success_url = '/success'
 
 
-# Books
+    # Books
+
+
 class BookCreateView(generic.CreateView):
     model = models.Book
     fields = [
-        'book_name', 'book_price', 'autor', 'series',
+        'book_name', 'book_image', 'book_price', 'autor', 'series',
         'genre', 'year_publishing', 'page', 'binding', 'format_book',
         'ISBN', 'weight', 'age_restrictions', 'publishing_house',
         'counter_book', 'active'
@@ -141,7 +146,7 @@ class BookCreateView(generic.CreateView):
 class BookUpdateView(generic.UpdateView):
     model = models.Book
     fields = [
-        'book_name', 'book_price', 'autor', 'series',
+        'book_name', 'book_image', 'book_price', 'autor', 'series',
         'genre', 'year_publishing', 'page', 'binding', 'format_book',
         'ISBN', 'weight', 'age_restrictions', 'publishing_house',
         'counter_book', 'active'
@@ -149,11 +154,27 @@ class BookUpdateView(generic.UpdateView):
     template_name = 'book/update_book.html'
     success_url = '/success'
 
+    def get_success_url(self) -> str:
+        resizer(self.object.book_image)
+        return super().get_success_url()
+
 
 class BookDeleteView(generic.DeleteView):
     model = models.Book
     template_name = 'book/delete_book.html'
     success_url = '/success'
+
+
+def resizer(image):
+    extention = image.file.name.split('.')[-1]
+    BASE_DIR = Path(image.file.name).resolve().parent
+    file_name = Path(image.file.name).resolve().name.split('.')
+    for m_basewidth in [250, 40]:
+        im = Image.open(image.file.name)
+        wpercent = (m_basewidth / float(im.size[0]))
+        hsize = int(float(im.size[1]) * float(wpercent))
+        im.thumbnail((m_basewidth, hsize), Image.Resampling.LANCZOS)
+        im.save(str(BASE_DIR / "".join(file_name[:-1])) + f'_{m_basewidth}.' + extention)
 
 
 def success_page(request):

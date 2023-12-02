@@ -77,6 +77,11 @@ class Book(models.Model):
         verbose_name='Book name',
         max_length=50
     )
+    book_image = models.ImageField(
+        blank=True,
+        default="/book/book-default_250.jpg",
+        upload_to="book/%Y/%m/%d/"
+    )
     book_price = models.DecimalField(
         max_digits=6,
         decimal_places=2,
@@ -179,5 +184,20 @@ class Book(models.Model):
     def __str__(self):
         return self.book_name
 
-    def get_absolute_url(self):
-        return '/success'
+    def book_picture_medium(self):
+        if self.book_image.url:
+            orig_url = self.book_image.url
+            new_url = orig_url.split(".")
+            picture_url = ".".join(new_url[:-1]) + "_250." + new_url[-1]
+            return picture_url
+
+    def book_picture_small(self):
+        if self.book_image.url:
+            orig_url = self.book_image.url
+            new_url = orig_url.split(".")
+            picture_url = ".".join(new_url[:-1]) + "_40." + new_url[-1]
+            return picture_url
+
+
+def get_absolute_url(self):
+    return '/success'
