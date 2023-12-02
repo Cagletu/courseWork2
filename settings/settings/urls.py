@@ -24,7 +24,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
 
     path('', include('books.urls', namespace='books')),
-    path('', homepage_views.HomePage.as_view()),
+    path('', homepage_views.HomePage.as_view(), name='homepage'),
+    path('authorization/', include('authorization.urls', namespace='authorization')),
 
 ]
 if settings.DEBUG:

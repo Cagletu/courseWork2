@@ -127,8 +127,18 @@ class SeriesDeleteView(generic.DeleteView):
     template_name = 'series/delete_series.html'
     success_url = '/success'
 
-
     # Books
+
+
+class ViewBook(generic.DetailView):
+    model = models.Book
+    fields = [
+        'book_name', 'book_image', 'book_price', 'autor', 'series',
+        'genre', 'year_publishing', 'page', 'binding', 'format_book',
+        'ISBN', 'weight', 'age_restrictions', 'publishing_house',
+        'counter_book', 'active'
+    ]
+    template_name = 'book/view_book.html'
 
 
 class BookCreateView(generic.CreateView):

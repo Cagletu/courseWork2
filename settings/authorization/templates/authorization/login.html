@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block TITLE %}Login{% endblock TITLE %}
+
+{% block BODY %}
+    {% if form.errors %}
+
+        {% for error in form.non_field_errors %}
+            <div class="alert alert-danger .alert-dismissible" role="alert">
+                <div class="text-left">
+                    <strong>Ошибка:</strong> {{ error }}<br/>
+                </div>
+            </div>
+        {% endfor %}
+
+    {% endif %}
+
+    {% if next %}
+        {% if user.is_authenticated %}
+            <p>net dostupa</p>
+        {% else %}
+
+        {% endif %}
+    {% endif %}
+
+    <div style="justify-content: center; align-items: center; display: flex; padding-top: 12%">
+        <form method="post" action="{% url 'authorization:login' %}">
+            {% csrf_token %}
+            <table>
+                <tr>
+                    <td>{{ form.username.label_tag }}</td>
+                    <td>{{ form.username }}</td>
+                </tr>
+                <tr>
+                    <td>{{ form.password.label_tag }}</td>
+                    <td>{{ form.password }}</td>
+                </tr>
+            </table>
+
+            <input type="submit" value="login" class="btn btn-success">
+            <input type="hidden" name="next" value="{{ next }}">
+
+
+        </form>
+        <a href="{% url 'authorization:signup' %}">
+            <button class="btn btn-outline-success">
+                Create account
+            </button>
+        </a>
+        <p><a href="">Lost password?</a></p>
+    </div>
+
+{% endblock BODY %}
