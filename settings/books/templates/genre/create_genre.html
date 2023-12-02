@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block TITLE %}Genre{% endblock TITLE %}
+
+{% block BODY %}
+{% load crispy_forms_tags %}
+<form action="/">
+    <button>Back</button>
+</form>
+<p style="font-size: 130%;font-weight: bold;">Create a new genre</p>
+<form action="" method="post">
+    {% csrf_token %}
+    {{ form|crispy }}
+    <button type="submit">Create</button>
+</form>
+
+{% endblock BODY %}

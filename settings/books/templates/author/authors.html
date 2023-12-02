@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block TITLE %}Autor{% endblock TITLE %}
+
+{% block BODY %}
+<form action="/">
+    <button>Back</button>
+</form>
+ <form action="{% url 'books:add-author' %}">
+    <button>Add</button>
+</form>
+{% for object in object_list %}
+<div>
+    <ul>
+        <p style="font-size: 130%;font-weight: bold;">Author №{{object.pk}}</p>
+        <li>Author name: {{object.autor_name}}</li>
+        <li>author description: {{object.autor_description}}</li>
+        <form action="{% url 'books:update-author' pk=object.pk %}">
+            <button>Edit</button>
+        </form>
+        <form action="{% url 'books:delete-author' pk=object.pk %}">
+            <button>Delete</button>
+        </form>
+    </ul>
+</div>
+{%endfor%}
+{% endblock BODY %}

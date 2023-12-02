@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block TITLE %}Publishing house{% endblock TITLE %}
+
+{% block BODY %}
+<form action="/">
+    <button>Back</button>
+</form>
+  <form action="{% url 'books:create-publishing-house' %}">
+    <button>Add</button>
+</form>
+{% for object in object_list %}
+<div>
+    <ul>
+        <p style="font-size: 130%;font-weight: bold;">Publishing house №{{object.pk}}</p>
+        <li>Publishing house name: {{object.publishing_house_name}}</li>
+        <li>publishing house description: {{object.publishing_house_description}}</li>
+        <form action="{% url 'books:update-publishing-house' pk=object.pk %}">
+            <button>Edit</button>
+        </form>
+        <form action="{% url 'books:delete-publishing-house' pk=object.pk %}">
+            <button>Delete</button>
+        </form>
+    </ul>
+</div>
+{%endfor%}
+{% endblock BODY %}

@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block TITLE %}Series{% endblock TITLE %}
+
+{% block BODY %}
+
+<form action="/">
+    <button>Back</button>
+</form>
+  <form action="{% url 'books:create-series' %}">
+    <button>Add</button>
+</form>
+{% for object in object_list %}
+<div>
+    <ul>
+        <p style="font-size: 130%;font-weight: bold;">Series №{{object.pk}}</p>
+        <li>Series name: {{object.series_name}}</li>
+        <li>series description: {{object.series_description}}</li>
+        <form action="{% url 'books:update-series' pk=object.pk %}">
+            <button>Edit</button>
+        </form>
+        <form action="{% url 'books:delete-series' pk=object.pk %}">
+            <button>Delete</button>
+        </form>
+    </ul>
+</div>
+{%endfor%}
+{% endblock BODY %}

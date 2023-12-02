@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block TITLE %}Autor{% endblock TITLE %}
+
+{% block BODY %}
+  <form action="/">
+    <button>Back</button>
+  </form>
+    <p style="font-size: 130%;font-weight: bold;">Delete "{{ object.autor_name }}"?</p>
+    <form action="" method="post">
+        {% csrf_token %}
+        <button type="submit">Delete</button>
+    </form>
+{% endblock BODY %}

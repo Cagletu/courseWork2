@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block TITLE %}Series{% endblock TITLE %}
+
+{% block BODY %}
+{% load crispy_forms_tags %}
+
+    <p style="font-size: 130%;font-weight: bold;">Update the Series "{{ object.series_name }}"</p>
+    <form action="" method="post">
+        {% csrf_token %}
+        {{ form|crispy }}
+        <button type="submit">Update</button>
+    </form>
+{% endblock BODY %}
