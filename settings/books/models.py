@@ -198,6 +198,5 @@ class Book(models.Model):
             picture_url = ".".join(new_url[:-1]) + "_40." + new_url[-1]
             return picture_url
 
-
-def get_absolute_url(self):
-    return '/success'
+    def get_absolute_url(self):
+        return '/success'
