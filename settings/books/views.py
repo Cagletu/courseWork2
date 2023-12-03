@@ -1,3 +1,4 @@
+import os
 from pathlib import Path
 
 from PIL import Image
@@ -6,8 +7,12 @@ from django.views import generic
 
 from . import models
 
-
 # Create your views here.
+BASE_DIR = Path(__file__).resolve().parent.parent
+MEDIA_ROOT = os.path.join(BASE_DIR, 'book')
+MEDIA_URL = 'book/'
+
+
 # Autor
 class AuthorsView(generic.ListView):
     model = models.Autor
@@ -177,14 +182,14 @@ class BookDeleteView(generic.DeleteView):
 
 def resizer(image):
     extention = image.file.name.split('.')[-1]
-    BASE_DIR = Path(image.file.name).resolve().parent
     file_name = Path(image.file.name).resolve().name.split('.')
     for m_basewidth in [250, 40]:
         im = Image.open(image.file.name)
         wpercent = (m_basewidth / float(im.size[0]))
         hsize = int(float(im.size[1]) * float(wpercent))
         im.thumbnail((m_basewidth, hsize), Image.Resampling.LANCZOS)
-        im.save(str(BASE_DIR / "".join(file_name[:-1])) + f'_{m_basewidth}.' + extention)
+        save_path = os.path.join(MEDIA_ROOT, "".join(file_name[:-1])) + f'_{m_basewidth}.' + extention
+        im.save(save_path)
 
 
 def success_page(request):
